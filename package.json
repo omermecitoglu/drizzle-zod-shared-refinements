@@ -1,18 +1,18 @@
 {
-  "name": "@omer-x/node-module",
-  "version": "1.0.0",
-  "description": "UPDATE_HERE_WITH_A_MEANINGFUL_DESCRIPTION",
+  "name": "drizzle-zod-shared-refinements",
+  "version": "0.0.0",
+  "description": "Provides a helper function for drizzle-zod to create shared refinements",
   "keywords": [
     "typescript"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/omermecitoglu/node-module.git"
+    "url": "git+https://github.com/omermecitoglu/drizzle-zod-shared-refinements.git"
   },
   "bugs": {
-    "url": "https://github.com/omermecitoglu/node-module/issues"
+    "url": "https://github.com/omermecitoglu/drizzle-zod-shared-refinements/issues"
   },
-  "homepage": "https://github.com/omermecitoglu/node-module#readme",
+  "homepage": "https://github.com/omermecitoglu/drizzle-zod-shared-refinements#readme",
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -42,8 +42,9 @@
     "dev": "tsup --watch",
     "build": "tsup"
   },
-  "dependencies": {
-    "react": "latest"
+  "peerDependencies": {
+    "drizzle-orm": "^0.45.1",
+    "drizzle-zod": "^0.8.3"
   },
   "devDependencies": {
     "@omer-x/eslint-config": "^2.2.6",
