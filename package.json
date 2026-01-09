@@ -3,7 +3,11 @@
   "version": "1.0.0-beta.0",
   "description": "Provides a helper function for drizzle-zod to create shared refinements",
   "keywords": [
-    "typescript"
+    "typescript",
+    "drizzle",
+    "zod",
+    "drizzle-zod",
+    "refinements"
   ],
   "repository": {
     "type": "git",
