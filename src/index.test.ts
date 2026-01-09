@@ -1,8 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { exampleFunction } from "./index";
+import { createSharedRefinements } from "./index";
+import type { Table } from "drizzle-orm";
 
-describe("exampleFunction", () => {
+describe("createSharedRefinements", () => {
   it("should be a function", () => {
-    expect(typeof exampleFunction).toBe("function");
+    expect(typeof createSharedRefinements).toBe("function");
+  });
+
+  it("should return the second parameter", () => {
+    const mockTable = {} as Table;
+    const refinements = {};
+    const output = createSharedRefinements(mockTable, refinements);
+    expect(output).toBe(refinements);
   });
 });
