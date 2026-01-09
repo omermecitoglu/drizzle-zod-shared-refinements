@@ -10,7 +10,9 @@
 
 ## Overview
 
-description
+This tiny module provides a helper function to define the refinements just once and share between `createSelectSchema`, `createInsertSchema` and `createUpdateSchema`
+
+[Read the official drizzle documentation for more information](https://orm.drizzle.team/docs/zod#refinements)
 
 ## Installation
 
@@ -18,6 +20,69 @@ To install this package
 
 ```sh
 npm install drizzle-zod-shared-refinements
+```
+
+## Usage
+
+before you needed to write refinements for each schemas
+
+```typescript
+import { pgTable, text, integer, json } from 'drizzle-orm/pg-core';
+import { createInsertSchema, createSelectSchema, createUpdateSchema } from 'drizzle-zod';
+import { z } from 'zod/v4';
+
+const users = pgTable('users', {
+  id: integer().primaryKey(),
+  name: text().notNull(),
+  bio: text(),
+  preferences: json()
+});
+
+const userSelectSchema = createSelectSchema(users, {
+  name: (schema) => schema.max(20), // Extends schema
+  bio: (schema) => schema.max(1000), // Extends schema before becoming nullable/optional
+  preferences: z.object({ theme: z.string() }) // Overwrites the field, including its nullability
+});
+
+const userInsertSchema = createInsertSchema(users, {
+  name: (schema) => schema.max(20), // Extends schema
+  bio: (schema) => schema.max(1000), // Extends schema before becoming nullable/optional
+  preferences: z.object({ theme: z.string() }) // Overwrites the field, including its nullability
+});
+
+const userUpdateSchema = createUpdateSchema(users, {
+  name: (schema) => schema.max(20), // Extends schema
+  bio: (schema) => schema.max(1000), // Extends schema before becoming nullable/optional
+  preferences: z.object({ theme: z.string() }) // Overwrites the field, including its nullability
+});
+```
+
+now you can share the refinements
+
+```typescript
+import { pgTable, text, integer, json } from 'drizzle-orm/pg-core';
+import { createInsertSchema, createSelectSchema, createUpdateSchema } from 'drizzle-zod';
+import { createSharedRefinements } from "drizzle-zod-shared-refinements";
+import { z } from 'zod/v4';
+
+const users = pgTable('users', {
+  id: integer().primaryKey(),
+  name: text().notNull(),
+  bio: text(),
+  preferences: json()
+});
+
+const sharedRefinements = createSharedRefinements(users, {
+  name: (schema) => schema.max(20), // Extends schema
+  bio: (schema) => schema.max(1000), // Extends schema before becoming nullable/optional
+  preferences: z.object({ theme: z.string() }) // Overwrites the field, including its nullability
+});
+
+const userSelectSchema = createSelectSchema(users, sharedRefinements);
+
+const userInsertSchema = createInsertSchema(users, sharedRefinements);
+
+const userUpdateSchema = createUpdateSchema(users, sharedRefinements);
 ```
 
 ## License
