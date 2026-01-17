@@ -26,4 +26,13 @@ describe("createSharedRefinements", () => {
     const output = createSharedRefinements(mockTable, refinements);
     expect(output).toBe(refinements);
   });
+
+  it("should be strict about refinement key types", () => {
+    const output = createSharedRefinements(mockTable, {
+      name: schema => schema.describe("user name"),
+      // @ts-expect-error REMOVE THIS LINE TO SEE THE PROBLEM
+      someRandomKey: schema => schema.describe("this is not a valid key"),
+    });
+    expect(typeof output).toBe("object");
+  });
 });
