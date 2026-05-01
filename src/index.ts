@@ -1,9 +1,9 @@
-import type { Table } from "drizzle-orm/table";
-import type { BuildRefine } from "drizzle-zod";
+import type { InferInsertModel, Table } from "drizzle-orm/table";
+import type { BuildRefine } from "drizzle-orm/zod";
 
 export function createSharedRefinements<
   T extends Table,
-  ValidKeys extends keyof T["$inferInsert"],
+  ValidKeys extends keyof InferInsertModel<T>,
   R extends BuildRefine<Pick<T["_"]["columns"], ValidKeys>, undefined>,
 >(
   table: T,
